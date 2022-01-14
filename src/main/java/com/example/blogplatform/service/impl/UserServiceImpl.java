@@ -55,9 +55,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<User> deleteUser(long userId) {
-        User exisitingUser = this.userRepository.findById(userId)
+        User existingUser = this.userRepository.findById(userId)
                 .orElseThrow(()-> new ResourceNotFoundException("User not found with id :" + userId));
-        this.userRepository.delete(exisitingUser);
+        this.userRepository.delete(existingUser);
         return ResponseEntity.ok().build();
     }
 

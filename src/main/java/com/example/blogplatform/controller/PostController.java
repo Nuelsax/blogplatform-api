@@ -5,6 +5,7 @@ import com.example.blogplatform.models.User;
 import com.example.blogplatform.service.PostService;
 import com.example.blogplatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,5 +48,10 @@ public class PostController {
         return postService.getPostByTitle(title);
     }
 
+
+    @GetMapping("/getAllPostsByPage/{text}/{range}")
+    public ResponseEntity<?> pageablePosts(@PathVariable("text") String text, @PathVariable("range") int range){
+        return ResponseEntity.ok().body(postService.getAllPosts(text, range));
+    }
 
 }

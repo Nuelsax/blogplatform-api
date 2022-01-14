@@ -4,6 +4,9 @@ import com.example.blogplatform.models.Post;
 import com.example.blogplatform.repository.PostRepository;
 import com.example.blogplatform.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -53,4 +56,11 @@ public class PostServiceImpl implements PostService {
     public void deletePostById(Long id) {
         this.postRepository.deleteById(id);
     }
+
+    @Override
+    public Page<Post> getAllPosts(String text, int range) {
+        Pageable postPageableList = PageRequest.of(0, range, Sort.by(text));
+        return postRepository.findAll(postPageableList);
+    }
 }
+

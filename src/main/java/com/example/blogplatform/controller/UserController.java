@@ -41,11 +41,14 @@ public class UserController {
     }
 
     @PostMapping("/login/{id}")
-    public String login(@RequestBody User user, @PathVariable("id") long userId) {
-        User exisitingUser = userService.getUserbyId(userId);
-        String email = exisitingUser.getEmail();
-        String password = exisitingUser.getPassword();
+    public String login(@RequestBody User user, @PathVariable("id") long userId, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User existingUser = userService.getUserbyId(userId);
+        String email = existingUser.getEmail();
+        String password = existingUser.getPassword();
+
          if( email.equals(user.getEmail()) && password.equals(user.getPassword())) {
+             session.setAttribute("user", existingUser);
              return "succesfully logged in";
          } else {
              System.out.println("this is the existinguser email " + email);
